@@ -26,6 +26,7 @@ class MenuItemDetailViewController: UIViewController {   //p. 906
         super.viewDidLoad();
 
         // Do any additional setup after loading the view.
+        addToOrderButton.layer.cornerRadius = 5.0;
         updateUI();      //p. 930
         setupDelegate(); //p. 935
     }
@@ -51,7 +52,7 @@ class MenuItemDetailViewController: UIViewController {   //p. 906
         titleLabel.text = menuItem.name;
         priceLabel.text = String(format: "$%.2f", menuItem.price);
         descriptionLabel.text = menuItem.description;
-        addToOrderButton.layer.cornerRadius = 5.0;
+        //addToOrderButton.layer.cornerRadius = 5.0;
         
         MenuController.shared.fetchImage(url: menuItem.imageURL) {(image: UIImage?) in   //pp. 949
             guard let image: UIImage = image else {
