@@ -166,8 +166,8 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue) {   //p. 941
         if segue.identifier == "DismissConfirmation" {   //p. 944
             MenuController.shared.order.menuItems.removeAll();
-            tableView.reloadData();
-            updateBadgeNumber();
+            //tableView.reloadData();
+            //updateBadgeNumber();
         }
     }
 
