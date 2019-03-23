@@ -22,7 +22,7 @@ struct PreparationTime: Codable {
 
 struct Order: Codable {   //new p. 909
     var menuItems: [MenuItem];
- 
+
     init(menuItems: [MenuItem] = []) {
         self.menuItems = menuItems;
     }
