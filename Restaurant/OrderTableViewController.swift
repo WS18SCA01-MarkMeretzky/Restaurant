@@ -15,6 +15,8 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        NotificationCenter.default.addObserver(tableView, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdatedNotification, object: nil);
+        
         // Uncomment the following line to preserve selection between presentations
         // clearsSelectionOnViewWillAppear = false;
 
