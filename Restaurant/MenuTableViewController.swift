@@ -64,6 +64,7 @@ class MenuTableViewController: UITableViewController {   //p. 905
                     return;
                 }
                 cell.imageView?.image = image;
+                cell.setNeedsLayout();   //new p. 949
             }
         }
     }
