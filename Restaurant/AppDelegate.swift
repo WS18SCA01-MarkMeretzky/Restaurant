@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         URLCache.shared = urlCache;
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadge), name: MenuController.orderUpdatedNotification, object: nil);
-        
-        orderTabBarItem = (self.window!.rootViewController! as! UITabBarController).viewControllers![1].tabBarItem;
+        orderTabBarItem = (self.window!.rootViewController! as! UITabBarController).viewControllers![1].tabBarItem;
         return true;
     }
     
