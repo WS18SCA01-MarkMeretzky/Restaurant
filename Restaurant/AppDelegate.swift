@@ -12,14 +12,23 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var orderTabBarItem: UITabBarItem!;   //new p. 937
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadge), name: MenuController.orderUpdatedNotification, object: nil);
+        
+        orderTabBarItem = (self.window!.rootViewController! as! UITabBarController).viewControllers![1].tabBarItem;
+        
         let temporaryDirectory: String =  FileManager.default.temporaryDirectory.path;   //p. 945
         let urlCache: URLCache = URLCache(memoryCapacity: 25_000_000, diskCapacity: 50_000_000, diskPath: temporaryDirectory);
         URLCache.shared = urlCache;
         return true;
+    }
+    
+    @objc func updateOrderBadge() {   //new p. 937
+        orderTabBarItem.badgeValue = String(MenuController.shared.order.menuItems.count);
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
