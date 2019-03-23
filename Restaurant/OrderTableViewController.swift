@@ -9,8 +9,9 @@
 import UIKit
 
 class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //pp. 905, 933
-    var menuItems: [MenuItem] = [MenuItem]();   //p. 931
+    //var menuItems: [MenuItem] = [MenuItem]();   //p. 931
     var orderMinutes: Int = 0;   //never created, but used on pp. 942, 943
+    var order: Order = Order();   //new p. 932
 
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -29,7 +30,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuItems.count;   //p. 932
+        return order.menuItems.count;   //p. 932
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -41,7 +42,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     }
     
     func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {   //p. 932
-        let menuItem = menuItems[indexPath.row]
+        let menuItem = order.menuItems[indexPath.row]
         cell.textLabel?.text = menuItem.name
         cell.detailTextLabel?.text = String(format: "$%.2f", menuItem.price);
         
