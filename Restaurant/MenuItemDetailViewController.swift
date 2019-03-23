@@ -43,7 +43,8 @@ class MenuItemDetailViewController: UIViewController {   //p. 906
             self.addToOrderButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0);
         }
 
-        delegate?.added(menuItem: menuItem);   //p. 935
+        //delegate?.added(menuItem: menuItem);   //p. 935
+        MenuController.shared.order.menuItems.append(menuItem);  //new p. 934
     }
     
     func updateUI() {   //p. 930
