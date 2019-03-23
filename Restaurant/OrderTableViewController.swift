@@ -11,7 +11,6 @@ import UIKit
 class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //pp. 905, 933
     //var menuItems: [MenuItem] = [MenuItem]();   //p. 931
     var orderMinutes: Int = 0;   //never created, but used on pp. 942, 943
-    var order: Order = Order();   //new p. 932
 
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -30,7 +29,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return order.menuItems.count;   //p. 932
+        return MenuController.shared.order.menuItems.count;   //p. 932
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,7 +41,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     }
     
     func configure(cell: UITableViewCell, forItemAt indexPath: IndexPath) {   //p. 932
-        let menuItem = order.menuItems[indexPath.row]
+        let menuItem = MenuController.shared.order.menuItems[indexPath.row]
         cell.textLabel?.text = menuItem.name
         cell.detailTextLabel?.text = String(format: "$%.2f", menuItem.price);
         
@@ -72,7 +71,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            menuItems.remove(at: indexPath.row);
+            MenuController.shared.order.menuItems.remove(at: indexPath.row);
             tableView.deleteRows(at: [indexPath], with: .fade);
             updateBadgeNumber();
         } else if editingStyle == .insert {
@@ -96,12 +95,12 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     */
     
     func updateBadgeNumber() {   //pp. 936-937
-        let badgeValue: String? = menuItems.count > 0 ? "\(menuItems.count)" : nil;
+        let badgeValue: String? = MenuController.shared.order.menuItems.count > 0 ? "\(MenuController.shared.order.menuItems.count)" : nil;
         navigationController?.tabBarItem.badgeValue = badgeValue;
     }
 
     @IBAction func submitTapped(_ sender: UIBarButtonItem) {   //pp. 941-942
-        let orderTotal: Double = menuItems.reduce(0.00) {(result: Double, menuItem: MenuItem) -> Double in
+        let orderTotal: Double = MenuController.shared.order.menuItems.reduce(0.00) {(result: Double, menuItem: MenuItem) -> Double in
             return result + menuItem.price;
         }
 
@@ -119,7 +118,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     }
     
     func uploadOrder() {   //p. 942-943
-        let menuIds: [Int] = menuItems.map {$0.id}
+        let menuIds: [Int] = MenuController.shared.order.menuItems.map {$0.id}
         
         MenuController.shared.submitOrder(menuIds: menuIds) {(minutes: Int?) in
             DispatchQueue.main.async {
@@ -134,8 +133,8 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     // MARK: - Protocol AddToOrderDelegate
     
     func added(menuItem: MenuItem) {   //p. 934
-        menuItems.append(menuItem);
-        let count: Int = menuItems.count;
+        MenuController.shared.order.menuItems.append(menuItem);
+        let count: Int = MenuController.shared.order.menuItems.count;
         let indexPath: IndexPath = IndexPath(row: count-1, section: 0);
         tableView.insertRows(at: [indexPath], with: .automatic);
         updateBadgeNumber();   //p. 937
@@ -166,7 +165,7 @@ class OrderTableViewController: UITableViewController, AddToOrderDelegate {   //
     
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue) {   //p. 941
         if segue.identifier == "DismissConfirmation" {   //p. 944
-            menuItems.removeAll();
+            MenuController.shared.order.menuItems.removeAll();
             tableView.reloadData();
             updateBadgeNumber();
         }
